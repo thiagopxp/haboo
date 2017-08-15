@@ -24,11 +24,12 @@ const config: webpack.Configuration = {
     plugins: [
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.WatchIgnorePlugin([/css\.d\.ts$/]),
         new HtmlWebpackPlugin({
-            title: 'react-hot-ts',
-            chunksSortMode: 'dependency',
-            template: path.resolve(__dirname, './src/index.html')
-        }),
+                title: 'haboo',
+                chunksSortMode: 'dependency',
+                template: path.resolve(__dirname, './src/index.html')
+            }),
     ],
 
     module: {
@@ -41,14 +42,14 @@ const config: webpack.Configuration = {
                     "awesome-typescript-loader"
                 ],
                 exclude: path.resolve(__dirname, 'node_modules'),
-                include: [path.resolve(__dirname, "src"), path.resolve(__dirname, "haboo-framework")],
+                include: [path.resolve(__dirname, "src")],
             },
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {
                 enforce: "pre",
                 test: /\.js$/,
                 loader: "source-map-loader"
-            }, 
+            },
             {
                 test: /\.css$/,
                 include: path.join(__dirname, 'src'),
