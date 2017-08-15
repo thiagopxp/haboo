@@ -52,6 +52,7 @@ const config: webpack.Configuration = {
             {
                 test: /\.css$/,
                 include: path.join(__dirname, 'src'),
+                exclude: path.resolve(__dirname, 'node_modules'),
                 use: [
                     'style-loader',
                     {
