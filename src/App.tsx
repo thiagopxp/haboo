@@ -1,7 +1,10 @@
 import * as React from "react";
 import HabooSdk from '@haboo/sdk';
-import {config} from './config/config.dev';
+import { config } from './config/config.dev';
 import * as css from './App.css';
+import Header from './Header';
+import Footer from './Footer';
+import Login from './Login';
 
 export default class App extends React.Component<{}, { count: number; }> {
     interval: number;
@@ -9,9 +12,6 @@ export default class App extends React.Component<{}, { count: number; }> {
 
     //This state will be maintained during hot reloads
     componentWillMount() {
-
-        this.example();
-
         this.interval = window.setInterval(() => {
             this.setState({ count: this.state.count + 1 })
         }, 1000);
@@ -21,17 +21,28 @@ export default class App extends React.Component<{}, { count: number; }> {
         window.clearInterval(this.interval);
     }
 
-    example() {
-        const sdk = new HabooSdk(config.apiUrl);
-        const data = sdk.login('ZhVjEN3IRpBs7kzrdcz0i4XSrUIjtDrh7kMAVdjt5qg=');
-        data.then(data => console.log(data));
+    static childContextTypes: React.ValidationMap<any> = {
+        habooSdk: React.PropTypes.object.isRequired
+    }
+
+    getChildContext() {
+        return {
+            habooSdk: new HabooSdk(config.apiUrl)
+        }
     }
 
     render() {
         return (
             <div>
-                <h1>Hello world!</h1>
-                <div className={css.foo}>Welcome to hot-reloading React written in TypeScript! {this.state.count}</div>
+                <Header />
+                <div>
+                    <h1>Hello world!</h1>
+                    <div className={css.foo}>Welcome to hot-reloading React written in TypeScript! {this.state.count}</div>
+                    <div>
+                        <Login />
+                    </div>
+                </div>
+                <Footer />
             </div>
         );
     }

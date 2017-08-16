@@ -3,6 +3,9 @@ import * as path from "path";
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 const PathOverridePlugin = require('./tools/replace-path');
 
+var envIndex = process.argv.indexOf("--env");
+const env = (envIndex == -1 ? "dev" : process.argv[++envIndex]);
+
 const config: webpack.Configuration = {
     entry: [
         "react-hot-loader/patch",
@@ -28,7 +31,7 @@ const config: webpack.Configuration = {
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.WatchIgnorePlugin([/css\.d\.ts$/]),
-        new PathOverridePlugin(/config\/config.dev/, 'config/config.prod'),
+        new PathOverridePlugin(/config\/config.dev/, `config/config.${env}`),
         new HtmlWebpackPlugin({
                 title: 'haboo',
                 chunksSortMode: 'dependency',
