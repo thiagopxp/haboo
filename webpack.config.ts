@@ -1,6 +1,7 @@
 import * as webpack from "webpack";
 import * as path from "path";
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+const PathOverridePlugin = require('./tools/replace-path');
 
 const config: webpack.Configuration = {
     entry: [
@@ -18,13 +19,16 @@ const config: webpack.Configuration = {
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
-        alias: { "@haboo/sdk": path.resolve(__dirname, './src/sdk') }
+        alias: { 
+            "@haboo/sdk": path.resolve(__dirname, './src/sdk')
+        }
     },
 
     plugins: [
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.WatchIgnorePlugin([/css\.d\.ts$/]),
+        new PathOverridePlugin(/config\/config.dev/, 'config/config.prod'),
         new HtmlWebpackPlugin({
                 title: 'haboo',
                 chunksSortMode: 'dependency',

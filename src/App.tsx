@@ -1,5 +1,6 @@
 import * as React from "react";
 import HabooSdk from '@haboo/sdk';
+import {config} from './config/config.dev';
 import * as css from './App.css';
 
 export default class App extends React.Component<{}, { count: number; }> {
@@ -21,7 +22,7 @@ export default class App extends React.Component<{}, { count: number; }> {
     }
 
     example() {
-        const sdk = new HabooSdk("http://localhost:4300");
+        const sdk = new HabooSdk(config.apiUrl);
         const data = sdk.login('ZhVjEN3IRpBs7kzrdcz0i4XSrUIjtDrh7kMAVdjt5qg=');
         data.then(data => console.log(data));
     }
