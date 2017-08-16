@@ -1,11 +1,15 @@
 export default class HabooSdk {
-    constructor(private apiUrl: string) {
+    constructor(private apiUrl: string, private publicKey: string) {
     }
 
-    async login(publicKey: string) {
-        const res = await fetch(`${this.apiUrl}/api/identity/environment/login`, {
+    async login(email: string, password: string) {
+        const res = await fetch(`${this.apiUrl}/api/identity/cms/user/login`, {
             method: 'POST',
-            body: JSON.stringify({ public_key: publicKey}),
+            body: JSON.stringify({
+                public_key: this.publicKey,
+                email,
+                password
+            }),
             headers: { 'Content-Type': 'application/json' }
         });
 

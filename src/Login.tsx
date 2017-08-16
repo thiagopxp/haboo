@@ -20,7 +20,7 @@ export default class Login extends React.Component<{}, {}> {
     }
 
     login() { 
-        this.context.habooSdk.login('ZhVjEN3IRpBs7kzrdcz0i4XSrUIjtDrh7kMAVdjt5qg=').then(res => console.log(res));
+        this.context.habooSdk.login('email@gmail', 'password').then(res => console.log(res));
     }
 
     render() {

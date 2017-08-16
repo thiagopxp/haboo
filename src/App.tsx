@@ -27,7 +27,7 @@ export default class App extends React.Component<{}, { count: number; }> {
 
     getChildContext() {
         return {
-            habooSdk: new HabooSdk(config.apiUrl)
+            habooSdk: new HabooSdk(config.apiUrl, config.publicKey)
         }
     }
 
