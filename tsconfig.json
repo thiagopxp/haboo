@@ -12,7 +12,9 @@
         ],
         "baseUrl": ".",
         "paths": {
-            "@haboo/sdk": ["src/sdk"]
+            "@haboo/sdk": [
+                "src/sdk"
+            ]
         },
         "lib": [
             "es2015",

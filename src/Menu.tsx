@@ -1,7 +1,6 @@
 import * as React from "react";
 import HabooSdk from '@haboo/sdk';
 import {config} from './config/config.dev';
-import * as css from './App.css';
 
 export default class Menu extends React.Component<{}, {}> {
     

@@ -1,10 +1,10 @@
 import * as React from "react";
 import HabooSdk from '@haboo/sdk';
 import { config } from './config/config.dev';
-import * as css from './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import Login from './Login';
+import * as css from './App.scss';
 
 export default class App extends React.Component<{}, { count: number; }> {
     interval: number;

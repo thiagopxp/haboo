@@ -9,6 +9,7 @@ const env = (envIndex == -1 ? "dev" : process.argv[++envIndex]);
 const config: webpack.Configuration = {
     entry: [
         "react-hot-loader/patch",
+        "./src/styles/global.scss",
         "./src/index.tsx",
     ],
     output: {
@@ -21,7 +22,7 @@ const config: webpack.Configuration = {
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        extensions: ['.ts', '.tsx', '.js', '.json'],
         alias: { 
             "@haboo/sdk": path.resolve(__dirname, './src/sdk')
         }
@@ -30,7 +31,6 @@ const config: webpack.Configuration = {
     plugins: [
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.WatchIgnorePlugin([/css\.d\.ts$/]),
         new PathOverridePlugin(/config\/config.dev/, `config/config.${env}`),
         new HtmlWebpackPlugin({
                 title: 'haboo',
@@ -44,12 +44,18 @@ const config: webpack.Configuration = {
             // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
             {
                 test: /\.tsx?$/,
-                loaders: [
-                    "react-hot-loader/webpack",
-                    "awesome-typescript-loader"
-                ],
-                exclude: path.resolve(__dirname, 'node_modules'),
-                include: [path.resolve(__dirname, "src")],
+                use: [
+                  {
+                    loader: 'awesome-typescript-loader',
+                    options: {
+                      silent: true,
+                      useCache: true,
+                      useTranspileModule: true,
+                      transpileOnly: true,
+                      cacheDirectory: path.resolve(__dirname, '.cache', 'typescript'),
+                    },
+                  },
+                ]
             },
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {
@@ -58,19 +64,30 @@ const config: webpack.Configuration = {
                 loader: "source-map-loader"
             },
             {
-                test: /\.css$/,
-                include: path.join(__dirname, 'src'),
-                exclude: path.resolve(__dirname, 'node_modules'),
+                test: /\.scss$/,
                 use: [
-                    'style-loader',
-                    {
-                        loader: 'typings-for-css-modules-loader',
-                        options: {
-                            modules: true,
-                            namedExport: true
-                        }
-                    }
-                ]
+                  {
+                    loader: 'style-loader',
+                  },
+                  {
+                    loader: 'css-loader',
+                    query: {
+                      sourceMap: false,
+                      modules: true,
+                      importLoaders: 1,
+                      localIdentName: '[name]-[local]_[hash:base64:5]',
+                    },
+                  },
+                  {
+                    loader: 'sass-loader',
+                    options: {
+                      sourceMap: false,
+                      includePaths: [
+                        path.resolve(__dirname, 'src', 'styles'),
+                      ],
+                    },
+                  }
+                ],
             }
         ]
     },

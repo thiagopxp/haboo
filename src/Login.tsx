@@ -1,11 +1,14 @@
 import * as React from "react";
 import HabooSdk from '@haboo/sdk';
 import {config} from './config/config.dev';
-import * as css from './App.css';
 import Menu from './Menu';
+import { createStore } from 'redux';
 
+type State = { 
+    email: string
+};
 
-export default class Login extends React.Component<{}, {}> {
+export default class Login extends React.Component<{}, State> {
     
     context:{habooSdk: HabooSdk}
 
