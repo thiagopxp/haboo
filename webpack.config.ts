@@ -24,7 +24,7 @@ const config: webpack.Configuration = {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: ['.ts', '.tsx', '.js', '.json'],
         alias: { 
-            "@haboo/sdk": path.resolve(__dirname, './src/sdk')
+            "@haboo/haboo-sdk": path.resolve(__dirname, './src/sdk')
         }
     },
 
