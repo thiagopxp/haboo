@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import App from "./App";
+import '@shopify/polaris/styles.scss';
 
 const rootEl = document.getElementById("root");
 ReactDOM.render(

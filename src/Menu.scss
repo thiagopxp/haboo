@@ -1,0 +1,15 @@
+@media screen and (min-width: 769px) {
+    .ui-app-frame__aside {
+        top: 5.6rem;
+        border-right: 1px solid #dfe4e8;
+        width: 24rem;
+    }    
+}
+
+.ui-app-frame__aside {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #f4f6f8;
+    box-sizing: border-box;
+}

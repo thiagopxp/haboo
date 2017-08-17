@@ -1,6 +1,5 @@
 import * as React from "react";
-import Menu from './Menu';
-
+import * as css from './Header.scss';
 
 export default class Header extends React.Component<{}, {}> {
     
@@ -12,7 +11,9 @@ export default class Header extends React.Component<{}, {}> {
 
     render() {
         return (
-            <Menu />
+            <header className={css['ui-app-frame__header']}>
+                <div className={css['ui-top-bar']}></div>
+            </header>
         );
     }
 }
