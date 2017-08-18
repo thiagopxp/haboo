@@ -1,0 +1,22 @@
+.ui-app-frame__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5.6rem;
+    z-index: 502;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.ui-top-bar {
+    background: #1c2260;
+    display: flex;
+    width: 100vw;
+    height: 5.6rem;
+}

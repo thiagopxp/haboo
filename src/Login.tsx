@@ -1,5 +1,5 @@
 import * as React from "react";
-import HabooSdk from '@haboo/sdk';
+import HabooSdk from '@haboo/haboo-sdk';
 import {config} from './config/config.dev';
 import Menu from './Menu';
 import { createStore } from 'redux';
