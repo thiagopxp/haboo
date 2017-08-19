@@ -3,7 +3,7 @@ export default class HabooSdk {
     }
 
     async login(email: string, password: string) {
-        const res = await fetch(`${this.apiUrl}/api/identity/cms/user/login`, {
+        const res = await fetch(`${this.apiUrl}/api/identity/user/cms/login`, {
             method: 'POST',
             body: JSON.stringify({
                 public_key: this.publicKey,

@@ -6,6 +6,8 @@ import Header from './Header';
 import Footer from './Footer';
 import Login from './Login';
 import * as css from './App.scss';
+import { userStore } from './flux/stores';
+import { Provider } from 'react-redux';
 
 import {
     Layout,
@@ -22,10 +24,11 @@ import {
     EmptyState
 } from '@shopify/polaris';
 
+
 export default class App extends React.Component<{}, any> {
     interval: number;
 
-    constructor(props) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -50,6 +53,8 @@ export default class App extends React.Component<{}, any> {
         window.clearInterval(this.interval);
     }
 
+    /** EXAMPLE: ADDING ITEMS IN CHILD CONTEXT ***************
+     * 
     static childContextTypes: React.ValidationMap<any> = {
         habooSdk: React.PropTypes.object.isRequired
     }
@@ -59,6 +64,7 @@ export default class App extends React.Component<{}, any> {
             habooSdk: new HabooSdk(config.apiUrl, config.publicKey)
         }
     }
+    */
 
     render() {
         const breadcrumbs = [
@@ -81,6 +87,10 @@ export default class App extends React.Component<{}, any> {
 
                                 {this.renderForm()}
 
+                                <Provider store={userStore}>
+                                    <Login/>
+                                </Provider>
+
                                 <Layout.Section>
                                     <FooterHelp>
                                         <div className={css.foo}>Welcome to hot-reloading React written in TypeScript! {this.state.count}.</div>
@@ -102,7 +112,7 @@ export default class App extends React.Component<{}, any> {
     }
 
     valueUpdater(field: string) {
-        return (value) => this.setState({ [field]: value });
+        return (value:any) => this.setState({ [field]: value });
     }
 
     toggleConnection() {
