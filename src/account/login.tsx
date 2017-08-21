@@ -1,68 +1,79 @@
 import * as React from "react";
-import { connect, Dispatch } from 'react-redux';
-import HabooSdk from '@haboo/haboo-sdk';
-import { config } from '../config';
-import Menu from '../app/Menu';
-import { createStore, bindActionCreators, Action, Store, Unsubscribe } from 'redux';
-import { userActions } from "../flux/actions";
-import { IUserLoginState, userLoginInitialState } from "../flux/stores";
+import * as PropTypes from "prop-types";
+import { Store, Unsubscribe } from "redux";
+import { connect, Dispatch } from "react-redux";
+import HabooSdk from "@haboo/haboo-sdk";
+
+import { config } from "../config";
+import Menu from "../app/Menu";
+import { userDispatcher } from "../flux/actions";
+import { IUserLoginState } from "../flux/stores";
 
 import {
-    Layout,
-    Card,
     Button,
+    Card,
+    Layout,
     FormLayout,
     TextField,
-} from '@shopify/polaris';
+} from "@shopify/polaris";
 
 class Login extends React.Component<any, IUserLoginState> {
+
+    public static contextTypes = {
+        router: PropTypes.object,
+        store: PropTypes.object,
+    };
+
+    private router: any;
+    private store: Store<IUserLoginState>;
+    private unsubscribe: Unsubscribe;
 
     constructor(props: any, context: any) {
         super(props, context);
 
         this.store = context.store;
-        this.state = userLoginInitialState;
+        this.router = context.router;
+        this.state = this.store.getState();
 
         this.onsubmit = this.onsubmit.bind(this);
         this.valueUpdater = this.valueUpdater.bind(this);
     }
 
-    static contextTypes = {
-        store: React.PropTypes.object
-    }
-
-    store: Store<IUserLoginState>;
-    unsubscribe: Unsubscribe;
-
-    componentWillMount() {
+    public componentWillMount() {
         this.unsubscribe = this.store.subscribe(() => {
-            this.setState(this.store.getState());
-        })
+
+            const newState = this.store.getState();
+
+            if (newState.isAuthenticated) {
+                return this.router.history.push("/sales");
+            }
+
+            this.setState(newState);
+        });
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
         this.unsubscribe();
     }
 
-    isValid() {
-        //todo: validator
+    public isValid() {
+        // todo: validator
         return true;
     }
 
-    onsubmit() {
+    public onsubmit() {
         if (this.isValid()) {
-            1
-            this.setState({ errors: {}, isLoading: true });
             this.props.login(this.state);
         }
     }
 
-    valueUpdater(field: any) {
+    public valueUpdater(field: any) {
         return (value: any) => this.setState({ [field]: value });
     }
 
-    render() {
-        const { errors, email, password, isLoading } = this.state;
+    public render() {
+        const { errors, email, password, isFetching } = this.state;
+      
         return (
             <Layout>
                 <Layout.AnnotatedSection
@@ -75,24 +86,21 @@ class Login extends React.Component<any, IUserLoginState> {
                                 value={email}
                                 label="Email"
                                 placeholder="example@email.com"
-                                onChange={this.valueUpdater('email')}
+                                onChange={this.valueUpdater("email")}
                             />
                             <TextField
                                 value={password}
                                 label="Password"
                                 placeholder="Password"
-                                onChange={this.valueUpdater('password')}
+                                type="password"
+                                onChange={this.valueUpdater("password")}
                             />
 
                             <div>
-                                {
-                                    Object.keys(errors).map((item, index) => {
-                                        return (<div key={index}>{errors[item]}</div>)
-                                    })
-                                }
+                                {Object.keys(errors).map((item, index) => (<div key={index}>{errors[item]}</div>))}
                             </div>
 
-                            <Button primary disabled={isLoading} onClick={this.onsubmit}>Submit</Button>
+                            <Button primary disabled={isFetching} onClick={this.onsubmit}>Submit</Button>
                         </FormLayout>
                     </Card>
                 </Layout.AnnotatedSection>
@@ -100,4 +108,4 @@ class Login extends React.Component<any, IUserLoginState> {
     }
 }
 
-export default connect((state: IUserLoginState) => state, userActions)(Login);
+export default connect((state: IUserLoginState) => state, userDispatcher)(Login);

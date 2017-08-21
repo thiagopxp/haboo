@@ -1,41 +1,33 @@
 import * as React from "react";
-import { Route, Redirect } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { Layout, EmptyState, FooterHelp, AccountConnection, Link as PrettyLink } from '@shopify/polaris';
-import { userStore } from '../flux/stores';
-import Login from './Login';
+import * as PropTypes from "prop-types";
+import { Provider } from "react-redux";
+import { Route, Redirect } from "react-router-dom";
+import { Layout, EmptyState, FooterHelp, AccountConnection, Link as PrettyLink } from "@shopify/polaris";
+import { userStore, IUserLoginState } from "../flux/stores";
+import Login from "./Login";
+import Profile from "./Profile";
+import userSecurity from "../flux/userSecurity";
+
 
 export default class Account extends React.Component<{}, {}> {
 
     constructor(props: any) {
         super(props);
-
-        this.state = {
-            connected: false
-        };
     }
 
-    render() {
+    public render() {
 
-        const connected = false; // TODO: Get value from Store
+        const { } = this.state;
+
         return (
             <Provider store={userStore}>
                 <div>
                     {
-                        connected ? <div>This route should display user's profile</div> : <Login />
-
-                    /* This route should have '/sign-in' appended
-                    <Route path={`${this.props.match.url}`} component={Login} />
-
-                    <Route exact path={this.props.match.url} render={() =>
-                        
-                    } /> */}
-
-
-
-
+                        !userSecurity.isExpired()
+                            ? <Profile {...userSecurity.getProfile()} />
+                            : <Login />
+                    }
                 </div>
-
             </Provider>
         );
     }

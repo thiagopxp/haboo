@@ -1,5 +1,6 @@
-import { userActions } from './userActions';
+import { userDispatcher, UserAction } from "./userActions";
 
 export {
-    userActions
-}
+    userDispatcher,
+    UserAction
+};

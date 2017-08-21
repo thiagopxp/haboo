@@ -1,32 +1,50 @@
+import HabooSdk from "@haboo/haboo-sdk";
+import * as PropTypes from "prop-types";
 import * as React from "react";
-import HabooSdk from '@haboo/haboo-sdk';
-import { config } from '../config';
-import * as css from './Menu.scss';
+import { Link } from "react-router-dom";
+import { config } from "../config";
+import * as css from "./Menu.scss";
 
 export default class Menu extends React.Component<{}, {}> {
 
-    componentWillMount() {
+    public static contextTypes = {
+        router: PropTypes.object,
+    };
+
+    private router: any;
+    constructor(props: any, context: any) {
+        super(props, context);
+        this.router = this.context.router;
     }
 
-    componentWillUnmount() {
+    public componentWillMount() {
     }
 
-    render() {
+    public componentWillUnmount() {
+    }
+
+    public navigate(path: any) {
+        this.router.history.push(path);
+    }
+
+    public render() {
         const menuItems = [
-            { label: 'Sales', link: '/sales', icon: 'credit_card' },
-            { label: 'Students', link: '/students', icon: 'school' },
-            { label: 'Settings', link: '/settings', icon: 'settings' }
+            { label: "Sales", link: "/sales", icon: "credit_card" },
+            { label: "Students", link: "/students", icon: "school" },
+            { label: "Account", link: "/account", icon: "school" },
+            { label: "Settings", link: "/settings", icon: "settings" },
         ].map((item) => {
             return (
-                <li key={item.link}> <a href={item.link}>
-                    <i className="material-icons">{item.icon}</i> {item.label} </a>
+                <li key={item.link}>
+                    <Link to={item.link}>
+                        <i className="material-icons">{item.icon}</i> {item.label}
+                    </Link>
                 </li>
-            )
+            );
         });
 
-
         return (
-            <aside className={css['ui-app-frame__aside']}>
+            <aside className={css["ui-app-frame__aside"]}>
                 <ul>
                     {menuItems}
                 </ul>
