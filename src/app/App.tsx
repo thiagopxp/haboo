@@ -39,19 +39,6 @@ export default class App extends React.Component<{}, any> {
         window.clearInterval(this.interval);
     }
 
-    /** EXAMPLE: ADDING ITEMS IN CHILD CONTEXT ***************
-     * 
-    static childContextTypes: React.ValidationMap<any> = {
-        habooSdk: React.PropTypes.object.isRequired
-    }
-
-    getChildContext() {
-        return {
-            habooSdk: new HabooSdk(config.apiUrl, config.publicKey)
-        }
-    }
-    */
-
     render() {
         return (
             <Router>
