@@ -34,6 +34,7 @@ export default class Menu extends React.Component<{}, {}> {
             { label: "Account", link: "/account", icon: "school" },
             { label: "SignIn", link: "/account/sign-in", icon: "school" },
             { label: "SignUp", link: "/account/sign-up", icon: "school" },
+            { label: "Organisation", link: "/account/organisation", icon: "local_library" },
             { label: "Profile", link: "/account/profile", icon: "school" },
             { label: "Settings", link: "/settings", icon: "settings" },
         ].map((item) => {

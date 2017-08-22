@@ -1,9 +1,9 @@
 import HabooSdk from "./HabooSdk";
-import { ErrorResponse } from "./ErrorResponse";
-import { IUserProfile } from "./UserProfile";
+import { ErrorResponse, IOrganisation, IUserProfile } from "./models";
 
 export {
     ErrorResponse,
+    IOrganisation,
     IUserProfile
 };
 

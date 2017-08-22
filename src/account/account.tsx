@@ -7,6 +7,7 @@ import { userStore, IUserState } from "../flux/stores";
 import SignIn from "./signin";
 import SignUp from "./signup";
 import Profile from "./Profile";
+import Organisation from "./Organisation";
 import userSecurity from "../flux/userSecurity";
 
 export default class Account extends React.Component<{}, {}> {
@@ -24,6 +25,7 @@ export default class Account extends React.Component<{}, {}> {
                 <div>
                     <Route path="/account/sign-in" component={SignIn} />
                     <Route path="/account/sign-up" component={SignUp} />
+                    <Route path="/account/organisation" component={Organisation} />
                     <Route path="/account/profile" render={() => {
                         return (<Profile  {...userSecurity.getProfile() } />);
                     }} />
